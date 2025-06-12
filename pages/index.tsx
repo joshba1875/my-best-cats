@@ -12,6 +12,7 @@ export default function Home() {
  const [catFavourites, setCatFavourites] = useState<CatsResponse>();
  const [catVotes, setCatVotes] = useState<[Vote?]>([]);
  const [errorMessage, setErrorMessage] = useState<string>();
+ const [refreshTrigger, setTriggerRefresh] = useState<{}>({});
 
  // Page init - load the cats, load the favourites, normalise the model
   useEffect(() => {
@@ -19,7 +20,7 @@ export default function Home() {
     // I was going down a different route here until I realised that the state should just be managed by a 3rd normalised prop
     return () => {};
     
-  }, []);
+  }, [refreshTrigger]);
 
   useEffect(() => {
     normaliseCats();
@@ -37,10 +38,6 @@ export default function Home() {
       const votes = catVotes.filter(vote => vote?.image_id == cat.id);
       votes.forEach((vote) => {
         if(vote){
-          if(isNaN(cat.score))
-          {
-            
-          }
           cat.score += vote.value;
         }
       });
@@ -119,7 +116,7 @@ export default function Home() {
               catFavourites?.map((cat) => 
                 {
                 return (
-                <CatImage key={cat.id} {...cat} />
+                <CatImage key={cat.id} cat={cat} setTriggerRefresh={setTriggerRefresh}  />
                 );
             }) : 
             <label>{errorMessage}</label>} 

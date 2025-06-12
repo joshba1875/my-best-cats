@@ -1,0 +1,9 @@
+{
+    "upload": {
+        "error": {
+            "file-upload-error": "Solicitud no válida, asegúrese de estar cargando una imagen",
+            "file-upload-general": "Error no controlado, por favor contacte con atención al cliente"
+        },
+        "label": "Por favor seleccione una fotografía de sus mejores gatos"
+    }
+}

@@ -1,0 +1,9 @@
+{
+    "upload": {
+        "error": {
+            "file-upload-error": "Invalid Request, please ensure you are uploading an image",
+            "file-upload-general": "Oops, unhandled error, please contact customer support"
+        },
+        "label": "Please Select a Photogrpah of your best cats"
+    }
+}

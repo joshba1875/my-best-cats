@@ -1,17 +1,23 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
+import { useTranslations } from 'next-intl';
+
+export async function getStaticProps(context) {
+  return {
+    props: {
+      messages: (await import(`../locales/upload_${context.locale}.json`)).default
+    }
+  };
+}
 
 // TODO: Migrate fetch logic to api-route
 // Blocker is that Node does not gracefully handle formData parsing and multipart/form-data encoding out of the box. 
 // Need to find a new lib or write one
 export default function UploadForm() {
   const router = useRouter();
+  const  t = useTranslations();
   const [selectedFile, setSelectedFile] = useState<File>();
   const [errorMessage, setErrorMessage] = useState<string>();
-
-  useEffect(() => {
-    
-  }, [errorMessage]);
 
   const handleFileChange = (event) => {
     if(event.currentTarget.files){
@@ -35,7 +41,7 @@ export default function UploadForm() {
             method: 'POST',
             body: formData,
           }
-    
+
      const url = 'https://api.thecatapi.com/v1/images/upload';
      const response = await fetch(url, init);
 
@@ -45,9 +51,9 @@ export default function UploadForm() {
     } else {
       // Handle common status codes
       switch(response.status){
-        case 400: setErrorMessage("Invalid Request, please ensure you are uploading an image");
+        case 400: setErrorMessage(t("upload.error.file-upload-error"));
           break;
-        default: setErrorMessage("Oops, unhandled error, please contact customer support");
+        default: setErrorMessage(t("upload.error.file-upload-general"));
       }
       const parsedResponse = await response.json();
       console.error('Error uploading file');
@@ -58,7 +64,7 @@ export default function UploadForm() {
   return (
     <form className="max-w-sm mx-auto pt-5" onSubmit={handleSubmit}>
       <div className="mb-5">
-        <label htmlFor="fileUpload" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Please Select a Photogrpah of your <i>best cats</i></label>
+        <label htmlFor="fileUpload" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{t("upload.label")}</label>
       </div>
       <div className="mb-5">
         <input  type="file" onChange={handleFileChange} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required />

@@ -1,7 +1,7 @@
 import { Key } from "react";
 import { Url } from "url";
 
-export type ResponseData = {
+export type ResponseData = Response & {
     message: String;
 }
 

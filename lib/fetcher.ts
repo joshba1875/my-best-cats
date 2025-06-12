@@ -1,4 +1,6 @@
-export default async function fetcher(operation: string, url: string, body?: string): Promise<Response> {
+import { ResponseData } from '../types';
+
+export default async function fetcher(operation: string, url: string, body?: string): Promise<ResponseData> {
     const init = {
         headers:{
             'Content-Type': 'application/json',
@@ -8,5 +10,5 @@ export default async function fetcher(operation: string, url: string, body?: str
         body: body
       };
 
-       return fetch(url, init);
+       return fetch(url, init) as unknown as ResponseData;
 }
