@@ -30,5 +30,7 @@ export default async function getCats (req: NextApiRequest, res: NextApiResponse
 
 export function catsHandler(response: Response){
     const res = response as unknown as CatsResponse;
+    //TODO: Refactor hack to default score to 0 
+    res.forEach((cat) => {cat.score = 0});
     return res;
 }

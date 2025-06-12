@@ -3,6 +3,7 @@ import Heart from 'react-animated-heart';
 import type { Cat } from '../types'
 import Image from 'next/image';
 import { useRouter } from 'next/router';
+import { Button } from '@headlessui/react';
 
 export default function CatImage(cat: Cat){
     console.log("cat: " + JSON.stringify(cat));
@@ -51,6 +52,53 @@ export default function CatImage(cat: Cat){
         });
     }
 
+    const upVote = (id: Key) => {
+
+      const init = {
+            headers:{
+            'Content-Type': 'application/json',
+            'x-api-key': 'live_Si8nMRhQsHfEqpYMKbZ0ieoiwqvSGBkJYjejkqbYsK2GHqt07ACpM86Y9tgeAB2x' 
+            },
+            method:  'POST',
+            body: JSON.stringify({ "image_id": id, "value": 1})
+        };
+
+        fetch(`https://api.thecatapi.com/v1/votes`, init)
+        .then((response) => response.json())
+        .then((data) => {
+                if(data && data.message == "SUCCESS"){
+                    // Manage state of score
+                     router.reload();
+                }
+                else{
+                  // Handle error
+                }
+            });
+    };
+
+    const downVote = (id: Key) => {
+       const init = {
+            headers:{
+            'Content-Type': 'application/json',
+            'x-api-key': 'live_Si8nMRhQsHfEqpYMKbZ0ieoiwqvSGBkJYjejkqbYsK2GHqt07ACpM86Y9tgeAB2x' 
+            },
+            method:  'POST',
+            body: JSON.stringify({ "image_id": id, "value": -1})
+        };
+
+        fetch(`https://api.thecatapi.com/v1/votes`, init)
+        .then((response) => response.json())
+        .then((data) => {
+                if(data && data.message == "SUCCESS"){
+                    // Manage state of score
+                     router.reload();
+                }
+                else{
+                  // Handle error
+                }
+            });
+    };
+
     return (
      <>
                   <article
@@ -65,7 +113,10 @@ export default function CatImage(cat: Cat){
                         src={cat.url}
                         alt=""
                       />
-                      <Heart isClick={isFavourite} onClick={() => favouriteClick(cat.id)}></Heart>
+                      <span>
+                        <Heart isClick={isFavourite} onClick={() => favouriteClick(cat.id)}></Heart> <label className='pt-5 absolute'>Score {cat.score ?? 0}</label>
+                        <Button className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" onClick={() => upVote(cat.id)} >Up Vote</Button> <Button className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" onClick={() => downVote(cat.id)}>Down Vote</Button>
+                      </span>
                     </div>
                   </article>
                 </>

@@ -16,6 +16,7 @@ export type CatsResponse = [{
     animals: [],
     categories: [],
     favourite_id?: string
+    score: number,
 }]
 
 
@@ -29,7 +30,8 @@ export type Cat = {
     breeds: [],
     animals: [],
     categories: [],
-    favourite_id?: string
+    favourite_id?: string,
+    score: number,
 }
 
 export type FavouritesResponse = [
@@ -53,6 +55,19 @@ export type Favourite =
     image_id: string,
     sub_id: string,
     created_at: string,
+    image: {
+        id: string,
+        url: string
+    }
+}
+
+export type Vote = {
+    id: string,
+    image_id: string,
+    sub_id: string,
+    created_at: string,
+    value: number,
+    country_code: string,
     image: {
         id: string,
         url: string
