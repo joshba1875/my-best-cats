@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
 import { catsHandler } from './api/my-cats';
-import Link from 'next/link';
-import type { CatsResponse, Favourite, FavouritesResponse, Vote } from '../types'
+import type { CatsResponse, Favourite, Vote } from '../types'
 import CatImage from '../components/catImage'
+import fetcher from '../lib/fetcher';
+import errorHandler from '../lib/errorHandler';
 
 export default function Home() {
 
@@ -10,6 +11,7 @@ export default function Home() {
  const [favourites, setFavourites] = useState<[Favourite?]>([]);
  const [catFavourites, setCatFavourites] = useState<CatsResponse>();
  const [catVotes, setCatVotes] = useState<[Vote?]>([]);
+ const [errorMessage, setErrorMessage] = useState<string>();
 
  // Page init - load the cats, load the favourites, normalise the model
   useEffect(() => {
@@ -52,72 +54,75 @@ export default function Home() {
   };   
 
   const fetchCats = () => {
-    const init = {
-        headers:{
-            'Content-Type': 'application/json',
-            'x-api-key': process.env.NEXT_PUBLIC_CAT_API_KEY ?? '', //'live_Si8nMRhQsHfEqpYMKbZ0ieoiwqvSGBkJYjejkqbYsK2GHqt07ACpM86Y9tgeAB2x' 
-        },
-        method: 'GET',
-        body: null
-      };
-
-      return fetch('https://api.thecatapi.com/v1/images/?limit=10&page=0&order=DESC', init)
-      .then((response) => response.json())
+      return fetcher('GET', 'https://api.thecatapi.com/v1/images/?limit=10&page=0&order=DESC')
+      .then((response) => {
+        if(!response.ok){
+          setErrorMessage(errorHandler(response));
+          Promise.reject(response);
+        }
+        return response.json();
+      })
       .then((data) => {
          const catsResponse = catsHandler(data);
          console.log("We're setting cats: " + JSON.stringify(catsResponse));
         setCatImages(catsResponse);
         console.log("catImages: " + JSON.stringify(catImages));
-      });
-  };
+  })
+  .catch(() => {
+    // More specific error handling
+  });
+};
 
   const fetchFavourites = () => {
-    const init = {
-        headers:{
-            'Content-Type': 'application/json',
-            'x-api-key': process.env.NEXT_PUBLIC_CAT_API_KEY ?? '' 
-        },
-        method: 'GET',
-        body: null
-      };
-
-      return fetch('https://api.thecatapi.com/v1/favourites', init)
-      .then((response) => response.json())
+    return fetcher('GET', 'https://api.thecatapi.com/v1/favourites')
+      .then((response) => {
+        if(!response.ok){
+          setErrorMessage(errorHandler(response));
+          Promise.reject(response);
+        }
+        return response.json();
+      })
       .then((data) => {
         // map to obj
-         console.log("We're setting favourites");
+        console.log("We're setting favourites");
         setFavourites(data as unknown as []);
 
       })
+      .catch(() => {
+        // More specific error handling
+      });
     };
 
     const fetchVotes = () => {
-    const init = {
-        headers:{
-            'Content-Type': 'application/json',
-            'x-api-key': process.env.NEXT_PUBLIC_CAT_API_KEY ?? '' 
-        },
-        method: 'GET',
-        body: null
-      };
-
-      return fetch('https://api.thecatapi.com/v1/votes', init)
-      .then((response) => response.json())
+      return fetcher('GET', 'https://api.thecatapi.com/v1/votes')
+      .then((response) => {
+        if(!response.ok){
+          setErrorMessage(errorHandler(response));
+          Promise.reject(response);
+        }
+        return response.json();
+      })
       .then((data) => {
-        console.log("We're setting cat votes: " + JSON.stringify(data));
+        // map to obj
+        console.log("We're setting cat votes");
         setCatVotes(data as unknown as []);
-      });
-  };
 
+      })
+      .catch(() => {
+        // More specific error handling
+      });
+    };
 
   return (
     <div className="md:grid md:gap-6 md:grid-cols-2 lg:grid-cols-4 mb-12">
-            {catFavourites?.map((cat) => 
-              {
-              return (
-               <CatImage key={cat.id} {...cat} />
-              );
-            })} 
+            {!!!errorMessage ? 
+              catFavourites?.map((cat) => 
+                {
+                return (
+                <CatImage key={cat.id} {...cat} />
+                );
+            }) : 
+            <label>{errorMessage}</label>} 
     </div>
   );
 }
