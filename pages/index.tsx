@@ -55,7 +55,7 @@ export default function Home() {
     const init = {
         headers:{
             'Content-Type': 'application/json',
-            'x-api-key': 'live_Si8nMRhQsHfEqpYMKbZ0ieoiwqvSGBkJYjejkqbYsK2GHqt07ACpM86Y9tgeAB2x' 
+            'x-api-key': process.env.NEXT_PUBLIC_CAT_API_KEY ?? '', //'live_Si8nMRhQsHfEqpYMKbZ0ieoiwqvSGBkJYjejkqbYsK2GHqt07ACpM86Y9tgeAB2x' 
         },
         method: 'GET',
         body: null
@@ -75,7 +75,7 @@ export default function Home() {
     const init = {
         headers:{
             'Content-Type': 'application/json',
-            'x-api-key': 'live_Si8nMRhQsHfEqpYMKbZ0ieoiwqvSGBkJYjejkqbYsK2GHqt07ACpM86Y9tgeAB2x' 
+            'x-api-key': process.env.NEXT_PUBLIC_CAT_API_KEY ?? '' 
         },
         method: 'GET',
         body: null
@@ -95,7 +95,7 @@ export default function Home() {
     const init = {
         headers:{
             'Content-Type': 'application/json',
-            'x-api-key': 'live_Si8nMRhQsHfEqpYMKbZ0ieoiwqvSGBkJYjejkqbYsK2GHqt07ACpM86Y9tgeAB2x' 
+            'x-api-key': process.env.NEXT_PUBLIC_CAT_API_KEY ?? '' 
         },
         method: 'GET',
         body: null

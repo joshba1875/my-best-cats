@@ -23,7 +23,7 @@ export default function CatImage(cat: Cat){
         const init = {
             headers:{
             'Content-Type': 'application/json',
-            'x-api-key': 'live_Si8nMRhQsHfEqpYMKbZ0ieoiwqvSGBkJYjejkqbYsK2GHqt07ACpM86Y9tgeAB2x' 
+            'x-api-key': process.env.NEXT_PUBLIC_CAT_API_KEY ?? ''
             },
             method: !!!isFavourite ? 'POST' : 'DELETE',
             body: body
@@ -57,7 +57,7 @@ export default function CatImage(cat: Cat){
       const init = {
             headers:{
             'Content-Type': 'application/json',
-            'x-api-key': 'live_Si8nMRhQsHfEqpYMKbZ0ieoiwqvSGBkJYjejkqbYsK2GHqt07ACpM86Y9tgeAB2x' 
+            'x-api-key': process.env.NEXT_PUBLIC_CAT_API_KEY ?? ''
             },
             method:  'POST',
             body: JSON.stringify({ "image_id": id, "value": 1})
@@ -80,7 +80,7 @@ export default function CatImage(cat: Cat){
        const init = {
             headers:{
             'Content-Type': 'application/json',
-            'x-api-key': 'live_Si8nMRhQsHfEqpYMKbZ0ieoiwqvSGBkJYjejkqbYsK2GHqt07ACpM86Y9tgeAB2x' 
+            'x-api-key': process.env.NEXT_PUBLIC_CAT_API_KEY ?? ''
             },
             method:  'POST',
             body: JSON.stringify({ "image_id": id, "value": -1})

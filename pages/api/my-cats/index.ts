@@ -11,7 +11,7 @@ export default async function getCats (req: NextApiRequest, res: NextApiResponse
           const init = {
             headers: {
                 'Content-Type': 'application/json',
-                'x-api-key': 'live_Si8nMRhQsHfEqpYMKbZ0ieoiwqvSGBkJYjejkqbYsK2GHqt07ACpM86Y9tgeAB2x' 
+                'x-api-key': process.env.NEXT_PUBLIC_CAT_API_KEY ?? ''
             }
           };
           

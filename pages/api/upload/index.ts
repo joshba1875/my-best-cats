@@ -17,7 +17,7 @@ export default async function uploadFile (req: NextApiRequest, res: NextApiRespo
           const init = {
             headers: {
                 'Content-Type': 'application/json',
-                'x-api-key': 'live_Si8nMRhQsHfEqpYMKbZ0ieoiwqvSGBkJYjejkqbYsK2GHqt07ACpM86Y9tgeAB2x' 
+                'x-api-key': process.env.NEXT_PUBLIC_CAT_API_KEY ?? ''
             },
              body: JSON.stringify({ file, sub_id }),
              method: 'POST'
