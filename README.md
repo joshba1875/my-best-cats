@@ -21,3 +21,5 @@
 - Implement unit tests (Playwright for UI, Jest for Node)
 - Implement SSG in order to pull cat images during build and ISR to refresh without full page reload
 - Implement login and profile management functionality
+- Add linting for code formatting standards
+- Add husky for git commit hooks (commit formatting)
