@@ -1,14 +1,16 @@
 # my-best-cats
  A collection of my NextJs best cats
 
- This is an example of a modern NextJs App (proof of concept) where users can upload images of their cats, favourite and up / down vote
- The app makes basic use of Tailwind CSS in order to provide the bare minimum in terms of responsive design for different viewport sizes
- Examples of error handling, I18N and A11Y are included but not applied consistently across the aplication due to time constraints
+ - This is an example of a modern NextJs App (proof of concept) where users can upload images of their cats, favourite and up / down vote
+ - The app makes basic use of Tailwind CSS in order to provide the bare minimum in terms of responsive design for different viewport sizes
+ - Examples of error handling, I18N and A11Y are included but not applied consistently across the aplication due to time constraints
 
-Pull down repo locally
-run `npm i`
-run `npm run dev`
-navigate to localhost:3000
+# Get started
+
+- Pull down repo locally
+- run `npm i`
+- run `npm run dev`
+- navigate to localhost:3000
 
 # TODO
 
