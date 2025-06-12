@@ -19,4 +19,5 @@
 - Store and retrieve api key from a secret manager
 - Align Types to ensure consistent intefaces and typing
 - Implement unit tests (Playwright for UI, Jest for Node)
-- Tweak state management so that a full page reload is not required to re-normalise the cat model (suggest using swr or similar caching lib to invakidate cache and refresh state gracefully)
+- Implement SSG in order to pull cat images during build and ISR to refresh without full page reload
+- Implement login and profile management functionality
