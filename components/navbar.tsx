@@ -6,7 +6,7 @@ const navigation = [
   { name: 'Upload', href: '/upload', current: false },
 ]
 
-function classNames(...classes) {
+function classNames(...classes: any) {
   return classes.filter(Boolean).join(' ')
 }
 

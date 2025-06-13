@@ -1,7 +1,7 @@
-
+/* 
 import { getCats, catsHandler } from '../pages/api/my-cats';
 
-export async function useGetCats(){
+export default async function useGetCats(){
    const response = await fetch('/api/my-cats', {
           method: 'GET',
           body: null}).then((data) => {
@@ -9,4 +9,4 @@ export async function useGetCats(){
           const catsResponse = catsHandler(data);
           return catsResponse;
   }
-}
+} */

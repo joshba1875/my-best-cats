@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { useTranslations } from 'next-intl';
 
-export async function getStaticProps(context) {
+export async function getStaticProps(context: any) {
   return {
     props: {
       messages: (await import(`../locales/upload_${context.locale}.json`)).default
@@ -19,7 +19,7 @@ export default function UploadForm() {
   const [selectedFile, setSelectedFile] = useState<File>();
   const [errorMessage, setErrorMessage] = useState<string>();
 
-  const handleFileChange = (event) => {
+  const handleFileChange = (event: any) => {
     if(event.currentTarget.files){
         setSelectedFile(event.currentTarget.files[0]);
     }
@@ -28,36 +28,40 @@ export default function UploadForm() {
     }
   };
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = async (event: any) => {
     event.preventDefault();
     const formData = new FormData();
-    formData.append('file', selectedFile);
+    if(selectedFile){
+      formData.append('file', selectedFile);
 
-    const init = {
-            headers: {
-            //    'Content-Type': 'multipart/form-data',
-                'x-api-key': process.env.NEXT_PUBLIC_CAT_API_KEY ?? ''
-            },
-            method: 'POST',
-            body: formData,
-          }
+      const init = {
+              headers: {
+              //    'Content-Type': 'multipart/form-data',
+                  'x-api-key': process.env.NEXT_PUBLIC_CAT_API_KEY ?? ''
+              },
+              method: 'POST',
+              body: formData,
+            }
 
-     const url = 'https://api.thecatapi.com/v1/images/upload';
-     const response = await fetch(url, init);
+      const url = 'https://api.thecatapi.com/v1/images/upload';
+      const response = await fetch(url, init);
 
-    if (response.ok && response.status === 201) {
-      //Redirect to home
-      router.replace('/');
-    } else {
-      // Handle common status codes
-      switch(response.status){
-        case 400: setErrorMessage(t("upload.error.file-upload-error"));
-          break;
-        default: setErrorMessage(t("upload.error.file-upload-general"));
+      if (response.ok && response.status === 201) {
+        //Redirect to home
+        router.replace('/');
+      } 
+      else {
+        // Handle common status codes
+        switch(response.status){
+          case 400: setErrorMessage(t("upload.error.file-upload-error"));
+            break;
+          default: setErrorMessage(t("upload.error.file-upload-general"));
+        }
+        const parsedResponse = await response.json();
+        console.error('Error uploading file');
+        console.log("Error Details: " + JSON.stringify(parsedResponse));
+      
       }
-      const parsedResponse = await response.json();
-      console.error('Error uploading file');
-      console.log("Error Details: " + JSON.stringify(parsedResponse));
     }
   };
 

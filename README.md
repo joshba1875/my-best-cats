@@ -9,6 +9,7 @@
 
 - Pull down repo locally
 - run `npm i`
+- run `npm run build` (optional, but good practice)
 - run `npm run dev`
 - navigate to localhost:3000
 - upload page has basic support for I18N, change the url to es-ES/upload to see a label and error message translate automatically into Spanish
