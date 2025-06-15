@@ -16,6 +16,7 @@
 
 # TODO
 
+- Refactor page init, suspect there is a race condition here that is not visible since fetchCats typically takes the longest to resolve. Normalise model should be called when all promises resolve, not only when fetchCats has resolved (and set)
 - Implement server-side routing for all external api requests
 - Hide api key from client and decorate headers going to thecatapi from back-end
 - Store and retrieve api key from a secret manager
