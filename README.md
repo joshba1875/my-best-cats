@@ -19,9 +19,12 @@
 - Implement server-side routing for all external api requests
 - Hide api key from client and decorate headers going to thecatapi from back-end
 - Store and retrieve api key from a secret manager
+- Add better styling and image preview functionality to /upload
+- Add delete button to image cards
 - Align Types to ensure consistent intefaces and typing
 - Implement unit tests (Playwright for UI, Jest for Node)
 - Implement SSG in order to pull cat images during build and ISR to refresh without full page reload
+- Lift state management up to utilise context api (avoids having to pass setter down to child components to trigger refresh)
 - Implement login and profile management functionality
 - Add linting for code formatting standards
 - Add husky for git commit hooks (commit formatting)
