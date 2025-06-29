@@ -9,7 +9,7 @@ export default function Home() {
 
  const [catImages, setCatImages] = useState<CatsResponse>();
  const [favourites, setFavourites] = useState<[Favourite?]>([]);
- const [catFavourites, setCatFavourites] = useState<CatsResponse>();
+ const [catsNormalised, setCatsNormalised] = useState<CatsResponse>();
  const [catVotes, setCatVotes] = useState<[Vote?]>([]);
  const [errorMessage, setErrorMessage] = useState<string>();
  const [refreshTrigger, setTriggerRefresh] = useState<{}>({});
@@ -17,9 +17,7 @@ export default function Home() {
  // Page init - load the votes, load the favourites, load the cats, normalise the model
   useEffect(() => {
     Promise.all([fetchFavourites(), fetchVotes()]).then(() => fetchCats());
-    // I was going down a different route here until I realised that the state should just be managed by a 3rd normalised prop
     return () => {};
-    
   }, [refreshTrigger]);
 
   useEffect(() => {
@@ -43,10 +41,8 @@ export default function Home() {
       });
 
     });
-
-    console.log(JSON.stringify(catImages));
     if(catImages !== undefined){
-      setCatFavourites(catImages);
+      setCatsNormalised(catImages);
     }
   };   
 
@@ -113,7 +109,7 @@ export default function Home() {
   return (
     <div className="md:grid md:gap-6 md:grid-cols-2 lg:grid-cols-4 mb-12">
             {!!!errorMessage ? 
-              catFavourites?.map((cat) => 
+              catsNormalised?.map((cat) => 
                 {
                 return (
                 <CatImage key={cat.id} cat={cat} setTriggerRefresh={setTriggerRefresh}  />
