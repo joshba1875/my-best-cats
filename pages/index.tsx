@@ -14,9 +14,9 @@ export default function Home() {
  const [errorMessage, setErrorMessage] = useState<string>();
  const [refreshTrigger, setTriggerRefresh] = useState<{}>({});
 
- // Page init - load the cats, load the favourites, normalise the model
+ // Page init - load the votes, load the favourites, load the cats, normalise the model
   useEffect(() => {
-    Promise.all([fetchCats(), fetchFavourites(), fetchVotes()]);
+    Promise.all([fetchFavourites(), fetchVotes()]).then(() => fetchCats());
     // I was going down a different route here until I realised that the state should just be managed by a 3rd normalised prop
     return () => {};
     
@@ -91,7 +91,7 @@ export default function Home() {
     };
 
     const fetchVotes = () => {
-      return fetcher('GET', 'https://api.thecatapi.com/v1/votes')
+      return fetcher('GET', 'https://api.thecatapi.com/v1/votes?limit=1000')
       .then((response) => {
         if(!response.ok){
           setErrorMessage(errorHandler(response));

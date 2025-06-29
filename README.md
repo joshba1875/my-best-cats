@@ -16,7 +16,8 @@
 
 # TODO
 
-- Refactor page init, suspect there is a race condition here that is not visible since fetchCats typically takes the longest to resolve. Normalise model should be called when all promises resolve, not only when fetchCats has resolved (and set)
+- Lift state management up to utilise context api (avoids having to pass setter down to child components to trigger refresh)
+- Add pagination to api calls (voting breaks when more than 1000 votes cast)
 - Implement server-side routing for all external api requests
 - Hide api key from client and decorate headers going to thecatapi from back-end
 - Store and retrieve api key from a secret manager
@@ -25,7 +26,6 @@
 - Align Types to ensure consistent intefaces and typing
 - Implement unit tests (Playwright for UI, Jest for Node)
 - Implement SSG in order to pull cat images during build and ISR to refresh without full page reload
-- Lift state management up to utilise context api (avoids having to pass setter down to child components to trigger refresh)
 - Refactor votes calculation to use array.reduce((x,y) => {})
 - Implement login and profile management functionality
 - Add linting for code formatting standards
